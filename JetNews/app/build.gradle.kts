@@ -34,6 +34,24 @@ android {
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
+        
+        // Use "default" flavor when flavor is not specified
+        // This resolves task ambiguity for tasks like assembleDebugUnitTest
+        missingDimensionStrategy("version", "default")
+    }
+
+    flavorDimensions += "version"
+    productFlavors {
+        create("default") {
+            dimension = "version"
+            applicationIdSuffix = ""
+            versionNameSuffix = ""
+        }
+        create("banner") {
+            dimension = "version"
+            applicationIdSuffix = ".banner"
+            versionNameSuffix = "-banner"
+        }
     }
 
     signingConfigs {
@@ -60,6 +78,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+        }
+    }
+
+    testOptions {
+        unitTests {
+            isReturnDefaultValues = true
         }
     }
     kotlinOptions {
