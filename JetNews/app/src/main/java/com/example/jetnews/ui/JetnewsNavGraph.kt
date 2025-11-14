@@ -24,7 +24,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
-import com.example.jetnews.JetnewsApplication.Companion.JETNEWS_APP_URI
+import com.example.jetnews.MyApplication.Companion.JETNEWS_APP_URI
 import com.example.jetnews.data.AppContainer
 import com.example.jetnews.ui.home.HomeRoute
 import com.example.jetnews.ui.home.HomeViewModel

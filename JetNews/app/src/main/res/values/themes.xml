@@ -14,5 +14,25 @@
      limitations under the License.
 -->
 <resources>
+    <!-- Main theme for Compose-based activities (Material Theme) -->
     <style name="Theme.Jetnews" parent="android:Theme.Material.NoActionBar"/>
+    
+    <!-- AppCompat theme for SplashActivity (uses AppCompatActivity) -->
+    <style name="Theme.Jetnews.Splash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    
+    <!-- AppCompat theme for MainActivity (uses AppCompatActivity with Compose) -->
+    <style name="Theme.Jetnews.Main" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- Allow Compose to handle the window background -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 </resources>

@@ -33,6 +33,7 @@ android {
         versionName = "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled = true
     }
 
     signingConfigs {
@@ -63,6 +64,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs += listOf("-opt-in=kotlin.RequiresOptIn")
     }
 
     compileOptions {
@@ -115,6 +117,18 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.window)
+
+    // Google Mobile Ads SDK
+    implementation("com.google.android.gms:play-services-ads:23.5.0")
+    
+    // User Messaging Platform (UMP) SDK
+    implementation("com.google.android.ump:user-messaging-platform:2.2.0")
+    
+    // MultiDex support
+    implementation("androidx.multidex:multidex:2.0.1")
+    
+    // Lifecycle for ProcessLifecycleOwner
+    implementation("androidx.lifecycle:lifecycle-process:2.8.2")
 
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.core)

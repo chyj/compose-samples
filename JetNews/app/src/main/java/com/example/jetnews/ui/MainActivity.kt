@@ -17,24 +17,83 @@
 package com.example.jetnews.ui
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
-import com.example.jetnews.JetnewsApplication
+import com.example.jetnews.GoogleMobileAdsConsentManager
+import com.example.jetnews.MyApplication
+import com.example.jetnews.R
+import com.google.android.gms.ads.MobileAds
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var googleMobileAdsConsentManager: GoogleMobileAdsConsentManager
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        val appContainer = (application as JetnewsApplication).container
+        googleMobileAdsConsentManager = GoogleMobileAdsConsentManager.getInstance(applicationContext)
+
+        val appContainer = (application as MyApplication).container
         setContent {
-            val widthSizeClass = calculateWindowSizeClass(this).widthSizeClass
+            val widthSizeClass = calculateWindowSizeClass(this@MainActivity).widthSizeClass
             JetnewsApp(appContainer, widthSizeClass)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_privacy_settings -> {
+                showPrivacyOptionsForm()
+                true
+            }
+            R.id.menu_ad_inspector -> {
+                openAdInspector()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    /**
+     * Show the privacy options form if required.
+     */
+    private fun showPrivacyOptionsForm() {
+        if (googleMobileAdsConsentManager.isPrivacyOptionsRequired) {
+            googleMobileAdsConsentManager.showPrivacyOptionsForm(this) {
+                Log.d(LOG_TAG, "Privacy options form dismissed")
+            }
+        } else {
+            Log.d(LOG_TAG, "Privacy options form is not required")
+        }
+    }
+
+    /**
+     * Open Ad Inspector for debugging ads.
+     */
+    private fun openAdInspector() {
+        MobileAds.openAdInspector(this) { adInspectorError ->
+            if (adInspectorError != null) {
+                Log.e(LOG_TAG, "Ad Inspector error: ${adInspectorError.code} - ${adInspectorError.message}")
+            } else {
+                Log.d(LOG_TAG, "Ad Inspector closed successfully")
+            }
+        }
+    }
+
+    companion object {
+        private const val LOG_TAG = "MainActivity"
     }
 }
