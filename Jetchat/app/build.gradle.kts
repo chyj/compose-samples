@@ -23,7 +23,7 @@ plugins {
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
-    namespace = "com.example.compose.jetchat"
+    namespace = "com.example.compose.jetchat.openad"
 
     defaultConfig {
         applicationId = "com.example.compose.jetchat"
