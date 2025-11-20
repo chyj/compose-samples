@@ -17,6 +17,7 @@
 package com.example.compose.jetchat
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -37,8 +38,11 @@ import androidx.core.view.ViewCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.example.compose.jetchat.ads.GoogleMobileAdsConsentManager
 import com.example.compose.jetchat.components.JetchatDrawer
 import com.example.compose.jetchat.databinding.ContentMainBinding
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import kotlinx.coroutines.launch
 
 /**
@@ -46,11 +50,27 @@ import kotlinx.coroutines.launch
  */
 class NavActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
+    
+    companion object {
+        private const val TAG = "NavActivity"
+        // 测试设备 ID 列表 - 请替换为您的实际测试设备 ID
+        // 获取方式：运行应用后查看 logcat，搜索 "To get test ads on this device"
+        private val TEST_DEVICE_IDS = listOf(
+            "YOUR_TEST_DEVICE_ID_HERE" // 示例：替换为实际设备 ID
+        )
+    }
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        
+        // 初始化 Google Mobile Ads SDK
+        initializeMobileAds()
+        
+        // 初始化合规授权管理器并收集用户同意
+        initializeConsent()
+        
         ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { _, insets -> insets }
 
         setContentView(
@@ -113,5 +133,61 @@ class NavActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         return navHostFragment.navController
+    }
+    
+    /**
+     * 初始化 Google Mobile Ads SDK
+     * 注意：应该在用户同意后调用
+     */
+    private fun initializeMobileAds() {
+        Log.d(TAG, "initializeMobileAds: start")
+        
+        // 配置测试设备
+        val requestConfiguration = RequestConfiguration.Builder()
+            .setTestDeviceIds(TEST_DEVICE_IDS)
+            .build()
+        MobileAds.setRequestConfiguration(requestConfiguration)
+        Log.d(TAG, "RequestConfiguration set with test devices: $TEST_DEVICE_IDS")
+        
+        // 初始化 MobileAds SDK
+        MobileAds.initialize(this) { initializationStatus ->
+            val statusMap = initializationStatus.adapterStatusMap
+            Log.d(TAG, "MobileAds initialization completed")
+            statusMap.forEach { (adapter, status) ->
+                Log.d(TAG, "Adapter: $adapter, State: ${status.initializationState}, " +
+                        "Description: ${status.description}")
+            }
+        }
+    }
+    
+    /**
+     * 初始化合规授权管理器
+     * 只有在 canRequestAds 为 true 时才初始化 MobileAds SDK
+     */
+    private fun initializeConsent() {
+        Log.d(TAG, "initializeConsent: start")
+        val consentManager = GoogleMobileAdsConsentManager.getInstance(this)
+        
+        // 收集用户同意信息
+        // 注意：isDebugGeography 在生产环境中应设置为 false
+        consentManager.gatherConsent(
+            activity = this,
+            testDeviceIds = TEST_DEVICE_IDS,
+            isDebugGeography = false, // 生产环境设为 false
+            onConsentGathered = { canRequestAds ->
+                Log.d(TAG, "Consent gathered, canRequestAds: $canRequestAds")
+                if (canRequestAds) {
+                    // 只有在可以请求广告时才初始化 MobileAds SDK
+                    initializeMobileAds()
+                } else {
+                    Log.w(TAG, "Cannot request ads, MobileAds SDK not initialized")
+                }
+                
+                // 如果需要显示隐私选项，可以在这里添加按钮或菜单项
+                if (consentManager.isPrivacyOptionsRequired) {
+                    Log.d(TAG, "Privacy options are required. Consider showing a button to open them.")
+                }
+            }
+        )
     }
 }

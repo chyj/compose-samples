@@ -33,6 +33,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.imePadding
@@ -78,6 +79,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.LastBaseline
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.testTag
@@ -88,6 +90,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.jetchat.FunctionalityNotAvailablePopup
 import com.example.compose.jetchat.R
+import com.example.compose.jetchat.ads.BannerAd
+import com.example.compose.jetchat.ads.GoogleMobileAdsConsentManager
 import com.example.compose.jetchat.components.JetchatAppBar
 import com.example.compose.jetchat.data.exampleUiState
 import com.example.compose.jetchat.theme.JetchatTheme
@@ -164,6 +168,13 @@ fun ConversationContent(
         }
     }
 
+    val context = LocalContext.current
+    val consentManager = remember { GoogleMobileAdsConsentManager.getInstance(context) }
+    val canRequestAds = remember { consentManager.canRequestAds }
+    
+    // 示例广告位 ID - 用于测试，请替换为您的正式广告位 ID
+    val sampleAdUnitId = "ca-app-pub-3940256099942544/6300978111"
+    
     Scaffold(
         topBar = {
             ChannelNameBar(
@@ -197,6 +208,12 @@ fun ConversationContent(
                 navigateToProfile = navigateToProfile,
                 modifier = Modifier.weight(1f),
                 scrollState = scrollState,
+            )
+            // Banner 广告 - 显示在消息列表和输入框之间
+            BannerAd(
+                adUnitId = sampleAdUnitId,
+                canRequestAds = canRequestAds,
+                modifier = Modifier.fillMaxWidth()
             )
             UserInput(
                 onMessageSent = { content ->
