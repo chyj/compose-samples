@@ -174,7 +174,7 @@ class SplashActivity : AppCompatActivity() {
   companion object {
     // Number of milliseconds to count down before showing the app open ad. This simulates the time
     // needed to load the app.
-    private const val COUNTER_TIME_MILLISECONDS = 5000L
+    private const val COUNTER_TIME_MILLISECONDS = 10000L
 
     const val LOG_TAG = "AppOpenAd"
   }
