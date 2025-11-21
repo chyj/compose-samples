@@ -32,5 +32,19 @@ class JetcasterApplication :
 
     @Inject lateinit var imageLoader: ImageLoader
 
+    val appOpenAdManager: AppOpenAdManager by lazy {
+        AppOpenAdManager(this)
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        // Initialize AppOpenAdManager
+        appOpenAdManager
+    }
+
     override fun newImageLoader(): ImageLoader = imageLoader
+
+    fun showAdIfAvailable(activity: android.app.Activity, onAdDismissed: (() -> Unit)? = null) {
+        appOpenAdManager.showAdIfAvailable(activity, onAdDismissed)
+    }
 }
