@@ -17,9 +17,12 @@
 package com.example.jetcaster.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.LaunchedEffect
+import com.example.jetcaster.ads.GoogleMobileAdsConsentManager
 import com.example.jetcaster.glancewidget.updateWidgetPreview
 import com.example.jetcaster.ui.theme.JetcasterTheme
 import com.google.accompanist.adaptive.calculateDisplayFeatures
@@ -27,19 +30,42 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private lateinit var consentManager: GoogleMobileAdsConsentManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 初始化合规管理器
+        consentManager = GoogleMobileAdsConsentManager.getInstance(this)
 
         enableEdgeToEdge()
         updateWidgetPreview(this)
         setContent {
             val displayFeatures = calculateDisplayFeatures(this)
 
+            // 请求合规信息更新
+            LaunchedEffect(Unit) {
+                try {
+                    // 仅在首次启动时请求合规信息
+                    consentManager.requestConsentInfoUpdate(
+                        activity = this@MainActivity,
+                        isDebug = false, // 生产环境设为 false
+                    )
+                } catch (e: Exception) {
+                    Log.e(TAG, "初始化合规流程失败", e)
+                }
+            }
+
             JetcasterTheme {
                 JetcasterApp(
                     displayFeatures,
+                    consentManager = consentManager,
                 )
             }
         }
+    }
+
+    companion object {
+        private const val TAG = "MainActivity"
     }
 }

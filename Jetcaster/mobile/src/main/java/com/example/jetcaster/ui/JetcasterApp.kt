@@ -36,12 +36,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.window.layout.DisplayFeature
 import com.example.jetcaster.R
+import com.example.jetcaster.ads.GoogleMobileAdsConsentManager
 import com.example.jetcaster.ui.home.MainScreen
 import com.example.jetcaster.ui.player.PlayerScreen
 
 @Composable
 @OptIn(ExperimentalSharedTransitionApi::class)
-fun JetcasterApp(displayFeatures: List<DisplayFeature>, appState: JetcasterAppState = rememberJetcasterAppState()) {
+fun JetcasterApp(
+    displayFeatures: List<DisplayFeature>,
+    appState: JetcasterAppState = rememberJetcasterAppState(),
+    consentManager: GoogleMobileAdsConsentManager? = null,
+) {
     val adaptiveInfo = currentWindowAdaptiveInfo()
     if (appState.isOnline) {
         SharedTransitionLayout {
@@ -63,6 +68,7 @@ fun JetcasterApp(displayFeatures: List<DisplayFeature>, appState: JetcasterAppSt
                                 navigateToPlayer = { episode ->
                                     appState.navigateToPlayer(episode.uri, backStackEntry)
                                 },
+                                consentManager = consentManager,
                             )
                         }
                     }

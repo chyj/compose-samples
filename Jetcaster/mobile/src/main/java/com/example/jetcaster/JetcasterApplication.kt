@@ -17,8 +17,11 @@
 package com.example.jetcaster
 
 import android.app.Application
+import android.util.Log
 import coil.ImageLoader
 import coil.ImageLoaderFactory
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -32,5 +35,40 @@ class JetcasterApplication :
 
     @Inject lateinit var imageLoader: ImageLoader
 
+    override fun onCreate() {
+        super.onCreate()
+        initializeMobileAds()
+    }
+
+    private fun initializeMobileAds() {
+        // 注册测试设备 ID（用于开发测试）
+        val testDeviceIds: List<String> = listOf(
+            // 添加你的测试设备 ID，可以通过 logcat 查看
+            // "YOUR_TEST_DEVICE_ID_HERE"
+        )
+        val requestConfiguration = RequestConfiguration.Builder()
+            .setTestDeviceIds(testDeviceIds)
+            .build()
+        MobileAds.setRequestConfiguration(requestConfiguration)
+
+        // 初始化 MobileAds SDK
+        MobileAds.initialize(this) { initializationStatus ->
+            val statusMap = initializationStatus.adapterStatusMap
+            for (adapterClass in statusMap.keys) {
+                val status = statusMap[adapterClass]
+                Log.d(
+                    TAG,
+                    "AdMob初始化 - 适配器: $adapterClass, 状态: ${status?.initializationState}, " +
+                        "描述: ${status?.description}",
+                )
+            }
+            Log.d(TAG, "AdMob SDK 初始化完成")
+        }
+    }
+
     override fun newImageLoader(): ImageLoader = imageLoader
+
+    companion object {
+        private const val TAG = "JetcasterApplication"
+    }
 }

@@ -111,6 +111,7 @@ import com.example.jetcaster.ui.podcast.PodcastDetailsViewModel
 import com.example.jetcaster.ui.theme.JetcasterTheme
 import com.example.jetcaster.ui.tooling.DevicePreviews
 import com.example.jetcaster.util.ToggleFollowPodcastIconButton
+import com.example.jetcaster.ads.BannerAd
 import com.example.jetcaster.util.fullWidthItem
 import com.example.jetcaster.util.isCompact
 import com.example.jetcaster.util.quantityStringResource
@@ -192,7 +193,12 @@ private fun getExcludedVerticalBounds(posture: Posture, hingePolicy: HingePolicy
 }
 
 @Composable
-fun MainScreen(windowSizeClass: WindowSizeClass, navigateToPlayer: (EpisodeInfo) -> Unit, viewModel: HomeViewModel = hiltViewModel()) {
+fun MainScreen(
+    windowSizeClass: WindowSizeClass,
+    navigateToPlayer: (EpisodeInfo) -> Unit,
+    viewModel: HomeViewModel = hiltViewModel(),
+    consentManager: com.example.jetcaster.ads.GoogleMobileAdsConsentManager? = null,
+) {
     val homeScreenUiState by viewModel.state.collectAsStateWithLifecycle()
     val uiState = homeScreenUiState
     Box {
@@ -201,6 +207,7 @@ fun MainScreen(windowSizeClass: WindowSizeClass, navigateToPlayer: (EpisodeInfo)
             windowSizeClass = windowSizeClass,
             navigateToPlayer = navigateToPlayer,
             viewModel = viewModel,
+            consentManager = consentManager,
         )
 
         if (uiState.errorMessage != null) {
@@ -243,6 +250,7 @@ private fun HomeScreenReady(
     windowSizeClass: WindowSizeClass,
     navigateToPlayer: (EpisodeInfo) -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
+    consentManager: com.example.jetcaster.ads.GoogleMobileAdsConsentManager? = null,
 ) {
     val navigator = rememberSupportingPaneScaffoldNavigator<String>(
         scaffoldDirective = calculateScaffoldDirective(currentWindowAdaptiveInfo()),
@@ -277,6 +285,7 @@ private fun HomeScreenReady(
                     },
                     navigateToPlayer = navigateToPlayer,
                     modifier = Modifier.fillMaxSize(),
+                    consentManager = consentManager,
                 )
             },
             supportingPane = {
@@ -383,6 +392,7 @@ private fun HomeScreen(
     navigateToPodcastDetails: (PodcastInfo) -> Unit,
     navigateToPlayer: (EpisodeInfo) -> Unit,
     modifier: Modifier = Modifier,
+    consentManager: com.example.jetcaster.ads.GoogleMobileAdsConsentManager? = null,
 ) {
     // Effect that changes the home category selection when there are no subscribed podcasts
     LaunchedEffect(key1 = featuredPodcasts) {
@@ -420,31 +430,49 @@ private fun HomeScreen(
             // Main Content
             val snackBarText = stringResource(id = R.string.episode_added_to_your_queue)
             val showHomeCategoryTabs = featuredPodcasts.isNotEmpty() && homeCategories.isNotEmpty()
-            HomeContent(
-                featuredPodcasts = featuredPodcasts,
-                selectedHomeCategory = selectedHomeCategory,
-                filterableCategoriesModel = filterableCategoriesModel,
-                podcastCategoryFilterResult = podcastCategoryFilterResult,
-                library = library,
-                modifier = Modifier.padding(contentPadding),
-                onHomeAction = { action ->
-                    if (action is HomeAction.QueueEpisode) {
-                        coroutineScope.launch {
-                            snackbarHostState.showSnackbar(snackBarText)
+            
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding),
+            ) {
+                HomeContent(
+                    featuredPodcasts = featuredPodcasts,
+                    selectedHomeCategory = selectedHomeCategory,
+                    filterableCategoriesModel = filterableCategoriesModel,
+                    podcastCategoryFilterResult = podcastCategoryFilterResult,
+                    library = library,
+                    modifier = Modifier.fillMaxSize(),
+                    onHomeAction = { action ->
+                        if (action is HomeAction.QueueEpisode) {
+                            coroutineScope.launch {
+                                snackbarHostState.showSnackbar(snackBarText)
+                            }
                         }
-                    }
-                    onHomeAction(action)
-                },
-                navigateToPodcastDetails = navigateToPodcastDetails,
-                navigateToPlayer = navigateToPlayer,
-            )
-
-            if (showHomeCategoryTabs) {
-                PillToolbar(
-                    selectedHomeCategory,
-                    onHomeAction,
-                    Modifier.align(Alignment.BottomCenter),
+                        onHomeAction(action)
+                    },
+                    navigateToPodcastDetails = navigateToPodcastDetails,
+                    navigateToPlayer = navigateToPlayer,
                 )
+
+                // Banner 广告 - 贴合底部，在 PillToolbar 上方
+                BannerAd(
+                    adUnitId = "ca-app-pub-3940256099942544/6300978111", // 示例广告位 ID，替换为正式广告位
+                    consentManager = consentManager,
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(
+                            bottom = if (showHomeCategoryTabs) 72.dp else 8.dp, // PillToolbar 高度约 64dp + 间距
+                        ),
+                )
+
+                if (showHomeCategoryTabs) {
+                    PillToolbar(
+                        selectedHomeCategory,
+                        onHomeAction,
+                        Modifier.align(Alignment.BottomCenter),
+                    )
+                }
             }
         }
     }
