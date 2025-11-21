@@ -26,7 +26,7 @@ android {
     namespace = "com.example.compose.jetchat"
 
     defaultConfig {
-        applicationId = "com.example.compose.jetchat"
+        applicationId = "com.example.compose.jetchat.interstitial"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
@@ -122,4 +122,10 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+
+    // Google Play Services Ads
+    implementation("com.google.android.gms:play-services-ads:24.4.0")
+    
+    // User Messaging Platform
+    implementation("com.google.android.ump:user-messaging-platform:3.2.0")
 }
