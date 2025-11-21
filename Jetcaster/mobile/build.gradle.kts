@@ -31,7 +31,7 @@ android {
     namespace = "com.example.jetcaster"
 
     defaultConfig {
-        applicationId = "com.example.jetcaster"
+        applicationId = "com.example.jetcaster.native"
         minSdk =
             libs.versions.minSdk
                 .get()
@@ -85,6 +85,7 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+        viewBinding = true
     }
 
     packaging.resources {
@@ -150,6 +151,10 @@ dependencies {
     implementation(projects.core.domain)
     implementation(projects.glancewidget)
     implementation(projects.core.domainTesting)
+
+    // AdMob
+    implementation(libs.play.services.ads)
+    implementation(libs.ump.user.messaging.platform)
 
     coreLibraryDesugaring(libs.core.jdk.desugaring)
 }
