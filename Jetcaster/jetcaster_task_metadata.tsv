@@ -1,0 +1,82 @@
+episode	category	path	description	nsteps	app
+10000000000000000001	general	jetcaster/trace_1	Open the app and view the Discover tab	2	Jetcaster
+10000000000000000002	general	jetcaster/trace_2	Switch to the Library tab	2	Jetcaster
+10000000000000000003	general	jetcaster/trace_3	Select a podcast category from the Discover page	3	Jetcaster
+10000000000000000004	general	jetcaster/trace_4	Play an episode from the latest episodes list	3	Jetcaster
+10000000000000000005	general	jetcaster/trace_5	Subscribe to a podcast from the Discover page	3	Jetcaster
+10000000000000000006	general	jetcaster/trace_6	Open a podcast details page	3	Jetcaster
+10000000000000000007	general	jetcaster/trace_7	Add an episode to the playback queue	3	Jetcaster
+10000000000000000008	general	jetcaster/trace_8	Pause the currently playing episode	3	Jetcaster
+10000000000000000009	general	jetcaster/trace_9	Navigate back from the player screen	3	Jetcaster
+10000000000000000010	general	jetcaster/trace_10	View subscribed podcasts in the Library tab	3	Jetcaster
+10000000000000000011	generated	jetcaster/trace_11	Select the Technology category and play the first episode	4	Jetcaster
+10000000000000000012	generated	jetcaster/trace_12	Subscribe to a podcast and then play its latest episode	4	Jetcaster
+10000000000000000013	generated	jetcaster/trace_13	Switch to Library tab and play an episode from your subscribed podcasts	4	Jetcaster
+10000000000000000014	generated	jetcaster/trace_14	Select Business category and subscribe to the first podcast	4	Jetcaster
+10000000000000000015	generated	jetcaster/trace_15	Open a podcast details page and add an episode to queue	4	Jetcaster
+10000000000000000016	generated	jetcaster/trace_16	Play an episode and then pause it	4	Jetcaster
+10000000000000000017	generated	jetcaster/trace_17	Select Science category and view available podcasts	4	Jetcaster
+10000000000000000018	generated	jetcaster/trace_18	Remove an episode from the playback queue	4	Jetcaster
+10000000000000000019	generated	jetcaster/trace_19	Navigate to a podcast details page and subscribe to it	4	Jetcaster
+10000000000000000020	generated	jetcaster/trace_20	Play an episode and skip forward by 10 seconds	4	Jetcaster
+10000000000000000021	generated	jetcaster/trace_21	Select a category, subscribe to a podcast, and play its episode	5	Jetcaster
+10000000000000000022	generated	jetcaster/trace_22	Open Library tab, select a subscribed podcast, and play an episode	5	Jetcaster
+10000000000000000023	generated	jetcaster/trace_23	Select Technology category, subscribe to a podcast, and add episode to queue	5	Jetcaster
+10000000000000000024	generated	jetcaster/trace_24	Play an episode, pause it, and then resume playback	5	Jetcaster
+10000000000000000025	generated	jetcaster/trace_25	Navigate to podcast details, subscribe, and play the latest episode	5	Jetcaster
+10000000000000000026	generated	jetcaster/trace_26	Select Business category, view podcasts, and subscribe to one	5	Jetcaster
+10000000000000000027	generated	jetcaster/trace_27	Add multiple episodes to the playback queue	5	Jetcaster
+10000000000000000028	generated	jetcaster/trace_28	Play an episode, skip forward, then skip backward	5	Jetcaster
+10000000000000000029	generated	jetcaster/trace_29	Switch between Discover and Library tabs multiple times	5	Jetcaster
+10000000000000000030	generated	jetcaster/trace_30	Select a category, browse podcasts, and play an episode	5	Jetcaster
+10000000000000000031	generated	jetcaster/trace_31	Unsubscribe from a podcast in the Library tab	5	Jetcaster
+10000000000000000032	generated	jetcaster/trace_32	Select Science category, subscribe to a podcast, and play its first episode	6	Jetcaster
+10000000000000000033	generated	jetcaster/trace_33	Open Library, select a podcast, view details, and play an episode	6	Jetcaster
+10000000000000000034	generated	jetcaster/trace_34	Select Technology category, subscribe to two podcasts, and play from one	6	Jetcaster
+10000000000000000035	generated	jetcaster/trace_35	Play an episode, pause, add another to queue, then resume	6	Jetcaster
+10000000000000000036	generated	jetcaster/trace_36	Navigate to podcast details, subscribe, add episode to queue, and play	6	Jetcaster
+10000000000000000037	generated	jetcaster/trace_37	Select Business category, browse podcasts, subscribe, and play episode	6	Jetcaster
+10000000000000000038	generated	jetcaster/trace_38	Play an episode, skip forward 10 seconds, skip backward 10 seconds, then pause	6	Jetcaster
+10000000000000000039	generated	jetcaster/trace_39	Switch to Library, select subscribed podcast, view episodes, and play one	6	Jetcaster
+10000000000000000040	generated	jetcaster/trace_40	Select a category, view multiple podcasts, subscribe to one, and play episode	6	Jetcaster
+10000000000000000041	generated	jetcaster/trace_41	Add episode to queue, play it, pause, then remove from queue	6	Jetcaster
+10000000000000000042	generated	jetcaster/trace_42	Select Technology category, subscribe to podcast, navigate to details, and play	7	Jetcaster
+10000000000000000043	generated	jetcaster/trace_43	Open Library tab, select podcast, view details, subscribe if needed, and play	7	Jetcaster
+10000000000000000044	generated	jetcaster/trace_44	Select Business category, subscribe to podcast, add episode to queue, and play	7	Jetcaster
+10000000000000000045	generated	jetcaster/trace_45	Play episode, pause, add another to queue, skip forward, then resume	7	Jetcaster
+10000000000000000046	generated	jetcaster/trace_46	Navigate to podcast details, subscribe, add episode to queue, play, and pause	7	Jetcaster
+10000000000000000047	generated	jetcaster/trace_47	Select Science category, browse podcasts, subscribe to one, and play episode	7	Jetcaster
+10000000000000000048	generated	jetcaster/trace_48	Switch between categories, select Technology, subscribe, and play episode	7	Jetcaster
+10000000000000000049	generated	jetcaster/trace_49	Open Library, select subscribed podcast, view episodes, add to queue, and play	7	Jetcaster
+10000000000000000050	generated	jetcaster/trace_50	Select category, view podcasts, subscribe to two, and play from first one	7	Jetcaster
+10000000000000000051	generated	jetcaster/trace_51	Play episode, skip forward, pause, add another to queue, then resume playback	8	Jetcaster
+10000000000000000052	generated	jetcaster/trace_52	Select Technology category, subscribe to podcast, navigate to details, add episode to queue, and play	8	Jetcaster
+10000000000000000053	generated	jetcaster/trace_53	Open Library tab, select podcast, view details, subscribe if needed, add episode to queue, and play	8	Jetcaster
+10000000000000000054	generated	jetcaster/trace_54	Select Business category, browse podcasts, subscribe to one, view details, and play episode	8	Jetcaster
+10000000000000000055	generated	jetcaster/trace_55	Play episode, pause, skip backward, add another to queue, skip forward, then resume	8	Jetcaster
+10000000000000000056	generated	jetcaster/trace_56	Navigate to podcast details, subscribe, add episode to queue, play, pause, and navigate back	8	Jetcaster
+10000000000000000057	generated	jetcaster/trace_57	Select Science category, view multiple podcasts, subscribe to one, and play its latest episode	8	Jetcaster
+10000000000000000058	generated	jetcaster/trace_58	Switch between Discover and Library, select category, subscribe, and play episode	8	Jetcaster
+10000000000000000059	generated	jetcaster/trace_59	Open Library, select subscribed podcast, view episodes, add multiple to queue, and play first	8	Jetcaster
+10000000000000000060	generated	jetcaster/trace_60	Select category, browse podcasts, subscribe to two different ones, and play from first	8	Jetcaster
+10000000000000000061	generated	jetcaster/trace_61	Select Technology category, subscribe to podcast, navigate to details, add episode to queue, play, and pause	9	Jetcaster
+10000000000000000062	generated	jetcaster/trace_62	Open Library tab, select podcast, view details, subscribe if needed, add episode to queue, play, and skip forward	9	Jetcaster
+10000000000000000063	generated	jetcaster/trace_63	Select Business category, browse podcasts, subscribe to one, view details, add episode to queue, and play	9	Jetcaster
+10000000000000000064	generated	jetcaster/trace_64	Play episode, pause, skip backward, add another to queue, skip forward, resume, then pause again	9	Jetcaster
+10000000000000000065	generated	jetcaster/trace_65	Navigate to podcast details, subscribe, add episode to queue, play, pause, skip forward, and navigate back	9	Jetcaster
+10000000000000000066	generated	jetcaster/trace_66	Select Science category, view multiple podcasts, subscribe to one, navigate to details, and play episode	9	Jetcaster
+10000000000000000067	generated	jetcaster/trace_67	Switch between categories, select Technology, subscribe to podcast, add episode to queue, and play	9	Jetcaster
+10000000000000000068	generated	jetcaster/trace_68	Open Library, select subscribed podcast, view episodes, add multiple to queue, play first, and pause	9	Jetcaster
+10000000000000000069	generated	jetcaster/trace_69	Select category, browse podcasts, subscribe to two, navigate to first podcast details, and play episode	9	Jetcaster
+10000000000000000070	generated	jetcaster/trace_70	Play episode, skip forward, pause, add another to queue, remove first from queue, then play second	9	Jetcaster
+10000000000000000071	generated	jetcaster/trace_71	Select Technology category, subscribe to podcast, navigate to details, add episode to queue, play, pause, and skip forward	10	Jetcaster
+10000000000000000072	generated	jetcaster/trace_72	Open Library tab, select podcast, view details, subscribe if needed, add episode to queue, play, skip forward, and pause	10	Jetcaster
+10000000000000000073	generated	jetcaster/trace_73	Select Business category, browse podcasts, subscribe to one, view details, add episode to queue, play, and navigate back	10	Jetcaster
+10000000000000000074	generated	jetcaster/trace_74	Play episode, pause, skip backward, add another to queue, skip forward, resume, pause, then remove from queue	10	Jetcaster
+10000000000000000075	generated	jetcaster/trace_75	Navigate to podcast details, subscribe, add episode to queue, play, pause, skip forward, skip backward, and navigate back	10	Jetcaster
+10000000000000000076	generated	jetcaster/trace_76	Select Science category, view multiple podcasts, subscribe to one, navigate to details, add episode to queue, and play	10	Jetcaster
+10000000000000000077	generated	jetcaster/trace_77	Switch between categories, select Technology, subscribe to podcast, navigate to details, add episode to queue, and play	10	Jetcaster
+10000000000000000078	generated	jetcaster/trace_78	Open Library, select subscribed podcast, view episodes, add multiple to queue, play first, pause, skip forward, and resume	10	Jetcaster
+10000000000000000079	generated	jetcaster/trace_79	Select category, browse podcasts, subscribe to two, navigate to first podcast details, add episode to queue, and play	10	Jetcaster
+10000000000000000080	generated	jetcaster/trace_80	Play episode, skip forward, pause, add another to queue, remove first from queue, play second, pause, and navigate back	10	Jetcaster
+
