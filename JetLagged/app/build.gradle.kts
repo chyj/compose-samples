@@ -27,7 +27,7 @@ android {
     namespace = "com.example.jetlagged"
 
     defaultConfig {
-        applicationId = "com.example.jetlagged"
+        applicationId = "com.example.jetlagged.native"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
@@ -83,6 +83,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
         // Disable unused AGP features
         buildConfig = false
         aidl = false
@@ -111,6 +112,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewModelCompose)
     implementation(libs.androidx.lifecycle.runtime)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation("androidx.lifecycle:lifecycle-process:${libs.versions.androidx.lifecycle.compose.get()}")
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.constraintlayout.compose)
 
@@ -126,6 +128,10 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     implementation(libs.coil.kt.compose)
+
+    // Google AdMob
+    implementation("com.google.android.gms:play-services-ads:24.4.0")
+    implementation("com.google.android.ump:user-messaging-platform:3.2.0")
 
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.core)

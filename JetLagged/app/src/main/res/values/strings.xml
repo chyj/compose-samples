@@ -13,32 +13,48 @@
   the License.
   -->
 <resources>
-    <string name="app_name">JetLagged</string>
-    <string name="label_back">Back</string>
-    <string name="jetlagged_app_heading">JetLagged</string>
-    <string name="average_time_in_bed_heading">AVG. TIME IN BED</string>
-    <string name="average_sleep_time_heading">AVG. SLEEP TIME</string>
-    <string name="not_implemented">Not implemented yet</string>
-    <string name="placeholder_text_ave_time">8h2min</string>
-    <string name="placeholder_text_ave_time_2">7h15min</string>
-    <string name="sleep_type_awake">Awake</string>
-    <string name="sleep_type_rem">REM</string>
-    <string name="sleep_type_light">Light</string>
-    <string name="sleep_type_deep">Deep</string>
-    <string name="sleep_tab_day_heading">Day</string>
-    <string name="sleep_tab_week_heading">Week</string>
-    <string name="sleep_tab_month_heading">Month</string>
-    <string name="sleep_tab_six_months_heading">6M</string>
-    <string name="sleep_tab_one_year_heading">1Y</string>
-    <string name="heart_rate_heading">Heart Rate</string>
-    <string name="wellness_heading">Wellness</string>
-    <string name="snoring_heading">Snoring</string>
-    <string name="coughing_heading">Coughing</string>
-    <string name="respiration_heading">Respiration</string>
-    <string name="ave_time_sleep_heading">AVE TIME SLEEP</string>
-    <string name="ave_time_in_bed_heading">AVE TIME IN BED</string>
-    <string name="ambiance_heading">Ambiance</string>
-    <string name="room_temperature">Room Temperature</string>
+  <string name="app_name">JetLagged Native</string>
+  <string name="label_back">Back</string>
+  <string name="jetlagged_app_heading">JetLagged</string>
+  <string name="average_time_in_bed_heading">AVG. TIME IN BED</string>
+  <string name="average_sleep_time_heading">AVG. SLEEP TIME</string>
+  <string name="not_implemented">Not implemented yet</string>
+  <string name="placeholder_text_ave_time">8h2min</string>
+  <string name="placeholder_text_ave_time_2">7h15min</string>
+  <string name="sleep_type_awake">Awake</string>
+  <string name="sleep_type_rem">REM</string>
+  <string name="sleep_type_light">Light</string>
+  <string name="sleep_type_deep">Deep</string>
+  <string name="sleep_tab_day_heading">Day</string>
+  <string name="sleep_tab_week_heading">Week</string>
+  <string name="sleep_tab_month_heading">Month</string>
+  <string name="sleep_tab_six_months_heading">6M</string>
+  <string name="sleep_tab_one_year_heading">1Y</string>
+  <string name="heart_rate_heading">Heart Rate</string>
+  <string name="wellness_heading">Wellness</string>
+  <string name="snoring_heading">Snoring</string>
+  <string name="coughing_heading">Coughing</string>
+  <string name="respiration_heading">Respiration</string>
+  <string name="ave_time_sleep_heading">AVE TIME SLEEP</string>
+  <string name="ave_time_in_bed_heading">AVE TIME IN BED</string>
+  <string name="ambiance_heading">Ambiance</string>
+  <string name="room_temperature">Room Temperature</string>
 
+  <!-- AdMob Native Ad strings -->
+  <string name="ad_app_icon">App Icon</string>
+  <string name="ad_failed_to_load">广告加载失败</string>
+  <string name="ad_loading">正在加载广告...</string>
+
+  <!-- Settings Screen strings -->
+  <string name="settings_title">设置</string>
+  <string name="privacy_settings_title">隐私设置</string>
+  <string name="privacy_settings_description">管理您的广告隐私设置和同意状态</string>
+  <string name="open_privacy_settings">打开隐私设置</string>
+  <string name="ad_inspector_title">Ad Inspector</string>
+  <string name="ad_inspector_description">调试和检查广告加载情况</string>
+  <string name="open_ad_inspector">打开 Ad Inspector</string>
+  <string name="debug_reset_consent_title">调试：重置同意状态</string>
+  <string name="debug_reset_consent_description">重置用户同意状态（仅用于测试）</string>
+  <string name="reset_consent_state">重置同意状态</string>
 
 </resources>

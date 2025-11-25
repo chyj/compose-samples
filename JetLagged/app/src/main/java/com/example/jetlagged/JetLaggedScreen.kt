@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -42,6 +43,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.jetlagged.backgrounds.movingStripesBackground
 import com.example.jetlagged.data.JetLaggedHomeScreenViewModel
+import com.example.jetlagged.ads.NativeAd
 import com.example.jetlagged.heartrate.HeartRateCard
 import com.example.jetlagged.sleep.JetLaggedHeader
 import com.example.jetlagged.sleep.JetLaggedSleepGraphCard
@@ -89,6 +91,15 @@ fun JetLaggedScreen(
             maxItemsInEachRow = 3,
         ) {
             JetLaggedSleepGraphCard(uiState.value.sleepGraphData, Modifier.widthIn(max = 600.dp))
+            
+            // 原生广告 - 显示在第一个 Item 之后
+            NativeAd(
+                adUnitId = "ca-app-pub-3940256099942544/2247696110", // 测试广告单元 ID
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            )
+            
             if (windowSizeClass == WindowWidthSizeClass.Compact) {
                 AverageTimeInBedCard()
                 AverageTimeAsleepCard()
