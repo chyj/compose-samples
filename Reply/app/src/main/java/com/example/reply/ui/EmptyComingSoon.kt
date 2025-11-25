@@ -32,7 +32,10 @@ import androidx.compose.ui.unit.dp
 import com.example.reply.R
 
 @Composable
-fun EmptyComingSoon(modifier: Modifier = Modifier) {
+fun EmptyComingSoon(
+    modifier: Modifier = Modifier,
+    titleResId: Int? = null,
+) {
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -40,7 +43,11 @@ fun EmptyComingSoon(modifier: Modifier = Modifier) {
     ) {
         Text(
             modifier = Modifier.padding(8.dp),
-            text = stringResource(id = R.string.empty_screen_title),
+            text = if (titleResId != null) {
+                stringResource(id = titleResId)
+            } else {
+                stringResource(id = R.string.empty_screen_title)
+            },
             style = MaterialTheme.typography.titleLarge,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.primary,
