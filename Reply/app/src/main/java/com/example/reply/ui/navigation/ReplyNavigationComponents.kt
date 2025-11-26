@@ -23,8 +23,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
@@ -239,8 +241,21 @@ fun ReplyNavigationRail(
 }
 
 @Composable
-fun ReplyBottomNavigationBar(currentDestination: NavDestination?, navigateToTopLevelDestination: (ReplyTopLevelDestination) -> Unit) {
-    NavigationBar(modifier = Modifier.fillMaxWidth()) {
+fun ReplyBottomNavigationBar(
+    currentDestination: NavDestination?,
+    navigateToTopLevelDestination: (ReplyTopLevelDestination) -> Unit,
+) {
+    val density = LocalDensity.current
+    val bannerHeight = 50.dp // Banner 标准高度
+    // 导航栏只需要向上移动 Banner 的高度，避免被 Banner 遮挡
+    // Banner 下方会有一个与导航栏相同背景色的区域填充到系统导航栏
+    val bottomPadding = bannerHeight
+    
+    NavigationBar(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = bottomPadding) // 为 Banner 留出空间
+    ) {
         TOP_LEVEL_DESTINATIONS.forEach { replyDestination ->
             NavigationBarItem(
                 selected = currentDestination.hasRoute(replyDestination),

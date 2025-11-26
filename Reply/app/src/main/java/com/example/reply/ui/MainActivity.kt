@@ -17,6 +17,7 @@
 package com.example.reply.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -31,8 +32,12 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.reply.data.local.LocalEmailsDataProvider
+import com.example.reply.ui.ads.GoogleMobileAdsConsentManager
 import com.example.reply.ui.theme.ContrastAwareReplyTheme
 import com.google.accompanist.adaptive.calculateDisplayFeatures
+import com.google.android.gms.ads.MobileAds
+
+private const val TAG = "MainActivity"
 
 class MainActivity : ComponentActivity() {
 
@@ -42,6 +47,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        
+        // 初始化 MobileAds SDK
+        initializeMobileAds()
+        
+        // 初始化合规授权管理器
+        GoogleMobileAdsConsentManager.getInstance().initialize(this)
 
         setContent {
             ContrastAwareReplyTheme {
@@ -65,6 +76,33 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
+    }
+    
+    /**
+     * 初始化 MobileAds SDK
+     */
+    private fun initializeMobileAds() {
+        Log.d(TAG, "初始化 MobileAds SDK")
+        MobileAds.initialize(this) { initializationStatus ->
+            val statusMap = initializationStatus.adapterStatusMap
+            for (adapterClass in statusMap.keys) {
+                val status = statusMap[adapterClass]
+                Log.d(
+                    TAG,
+                    "广告适配器: $adapterClass = ${status?.initializationState} " +
+                        "(${status?.description})"
+                )
+            }
+            Log.d(TAG, "MobileAds SDK 初始化完成")
+        }
+        
+        // 注册测试设备（可选，用于测试）
+        // 在 logcat 中搜索 "Use RequestConfiguration.Builder().setTestDeviceIds" 获取设备 ID
+        // val testDeviceIds = listOf("YOUR_TEST_DEVICE_ID")
+        // val requestConfiguration = RequestConfiguration.Builder()
+        //     .setTestDeviceIds(testDeviceIds)
+        //     .build()
+        // MobileAds.setRequestConfiguration(requestConfiguration)
     }
 }
 

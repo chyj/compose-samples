@@ -9,31 +9,32 @@
   the License.
   -->
 <resources>
-    <string name="app_name">Reply</string>
-    <string name="navigation_drawer">Navigation Drawer</string>
-    <string name="close_drawer">Close drawer</string>
-    <string name="tab_inbox">Inbox</string>
-    <string name="tab_article">Articles</string>
-    <string name="tab_dm">Direct Messages</string>
-    <string name="tab_groups">Groups</string>
+  <string name="app_name">Reply Banner</string>
+  <string name="navigation_drawer">Navigation Drawer</string>
+  <string name="close_drawer">Close drawer</string>
+  <string name="tab_inbox">Inbox</string>
+  <string name="tab_article">Articles</string>
+  <string name="tab_dm">Direct Messages</string>
+  <string name="tab_groups">Groups</string>
 
-    <string name="profile">Profile</string>
-    <string name="search">Search</string>
-    <string name="reply">Reply</string>
-    <string name="reply_all">Reply All</string>
+  <string name="profile">Profile</string>
+  <string name="search">Search</string>
+  <string name="reply">Reply</string>
+  <string name="reply_all">Reply All</string>
 
-    <string name="edit">Edit</string>
-    <string name="compose">Compose</string>
+  <string name="edit">Edit</string>
+  <string name="compose">Compose</string>
 
-    <string name="empty_screen_title">Screen under construction</string>
-    <string name="empty_screen_subtitle">This screen is still under construction. This sample will help you learn about adaptive layouts in Jetpack Compose</string>
+  <string name="empty_screen_title">Screen under construction</string>
+  <string name="empty_screen_subtitle">This screen is still under construction. This sample will
+    help you learn about adaptive layouts in Jetpack Compose</string>
 
-    <string name="back_button">Back</string>
-    <string name="more_options_button">More options</string>
-    <string name="messages">Messages</string>
-    <string name="four_hours_ago">4 hrs ago</string>
+  <string name="back_button">Back</string>
+  <string name="more_options_button">More options</string>
+  <string name="messages">Messages</string>
+  <string name="four_hours_ago">4 hrs ago</string>
 
-    <string name="search_emails">Search emails</string>
-    <string name="no_item_found">No item found</string>
-    <string name="no_search_history">No search history</string>
+  <string name="search_emails">Search emails</string>
+  <string name="no_item_found">No item found</string>
+  <string name="no_search_history">No search history</string>
 </resources>

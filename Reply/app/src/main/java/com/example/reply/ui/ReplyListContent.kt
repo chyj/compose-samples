@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.window.layout.DisplayFeature
 import com.example.reply.R
 import com.example.reply.data.Email
+import com.example.reply.ui.ads.BannerAd
 import com.example.reply.ui.components.EmailDetailAppBar
 import com.example.reply.ui.components.ReplyDockedSearchBar
 import com.example.reply.ui.components.ReplyEmailListItem
@@ -109,6 +110,7 @@ fun ReplyInboxScreen(
                 modifier = Modifier.fillMaxSize(),
                 closeDetailScreen = closeDetailScreen,
                 navigateToDetail = navigateToDetail,
+                navigationType = navigationType,
             )
             // When we have bottom navigation we show FAB at the bottom end.
             if (navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
@@ -139,6 +141,7 @@ fun ReplySinglePaneContent(
     modifier: Modifier = Modifier,
     closeDetailScreen: () -> Unit,
     navigateToDetail: (Long, ReplyContentType) -> Unit,
+    navigationType: ReplyNavigationType,
 ) {
     if (replyHomeUIState.openedEmail != null && replyHomeUIState.isDetailOnlyOpen) {
         BackHandler {
@@ -198,7 +201,7 @@ fun ReplyEmailList(
                     isSelected = selectedEmailIds.contains(email.id),
                 )
             }
-            // Add extra spacing at the bottom if
+            // Add extra spacing at the bottom for banner ad and navigation bar
             item {
                 Spacer(Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
             }

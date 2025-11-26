@@ -27,7 +27,7 @@ android {
     namespace = "com.example.reply"
 
     defaultConfig {
-        applicationId = "com.example.reply"
+        applicationId = "com.example.reply.banner"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
@@ -134,4 +134,8 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    // Google Mobile Ads SDK
+    implementation("com.google.android.gms:play-services-ads:24.4.0")
+    implementation("com.google.android.ump:user-messaging-platform:3.2.0")
 }
