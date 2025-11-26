@@ -226,6 +226,12 @@ fun ReplyNavigationRail(
                             ),
                         )
                     },
+                    label = {
+                        Text(
+                            text = stringResource(id = replyDestination.iconTextId),
+                            style = MaterialTheme.typography.labelSmall,
+                        )
+                    },
                 )
             }
         }
@@ -243,6 +249,12 @@ fun ReplyBottomNavigationBar(currentDestination: NavDestination?, navigateToTopL
                     Icon(
                         painter = painterResource(id = replyDestination.selectedIcon),
                         contentDescription = stringResource(id = replyDestination.iconTextId),
+                    )
+                },
+                label = {
+                    Text(
+                        text = stringResource(id = replyDestination.iconTextId),
+                        style = MaterialTheme.typography.labelSmall,
                     )
                 },
             )

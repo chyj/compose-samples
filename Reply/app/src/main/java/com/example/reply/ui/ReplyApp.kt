@@ -31,6 +31,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.window.layout.DisplayFeature
 import androidx.window.layout.FoldingFeature
+import com.example.reply.R
 import com.example.reply.ui.navigation.ReplyNavigationActions
 import com.example.reply.ui.navigation.ReplyNavigationWrapper
 import com.example.reply.ui.navigation.Route
@@ -139,13 +140,13 @@ private fun ReplyNavHost(
             )
         }
         composable<Route.DirectMessages> {
-            EmptyComingSoon()
+            EmptyComingSoon(titleResId = R.string.tab_dm)
         }
         composable<Route.Articles> {
-            EmptyComingSoon()
+            EmptyComingSoon(titleResId = R.string.tab_article)
         }
         composable<Route.Groups> {
-            EmptyComingSoon()
+            EmptyComingSoon(titleResId = R.string.tab_groups)
         }
     }
 }
