@@ -20,7 +20,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jetnews.R
 import com.example.jetnews.ui.MainActivity
@@ -71,74 +70,46 @@ class SplashActivity : AppCompatActivity() {
             Log.e(LOG_TAG, "Error creating timer", e)
         }
 
+        // 绕过用户同意，直接设置为已完成
         try {
             googleMobileAdsConsentManager = GoogleMobileAdsConsentManager.getInstance(applicationContext)
             Log.d(LOG_TAG, "GoogleMobileAdsConsentManager instance obtained")
             
-            googleMobileAdsConsentManager.gatherConsent(this) { consentError ->
-                Log.d(LOG_TAG, "gatherConsent() callback invoked, error: ${consentError?.message}")
-                
-                if (consentError != null) {
-                    // Consent not obtained in current session.
-                    Log.w(LOG_TAG, "Consent error - Code: ${consentError.errorCode}, Message: ${consentError.message}")
-                }
-
-                gatherConsentFinished.set(true)
-                Log.d(LOG_TAG, "canRequestAds: ${googleMobileAdsConsentManager.canRequestAds}")
-
-                if (googleMobileAdsConsentManager.canRequestAds) {
-                    initializeMobileAdsSdk()
-                }
-
-                if (secondsRemaining <= 0) {
-                    Log.d(LOG_TAG, "Timer finished, starting MainActivity")
-                    startMainActivity()
-                }
-            }
-        } catch (e: Exception) {
-            Log.e(LOG_TAG, "Error in consent gathering", e)
+            // 直接设置同意收集为已完成，绕过用户同意流程
             gatherConsentFinished.set(true)
-        }
-
-        // This sample attempts to load ads using consent obtained in the previous session.
-        try {
-            if (googleMobileAdsConsentManager.canRequestAds) {
-                Log.d(LOG_TAG, "Previous session consent available, initializing SDK")
-                initializeMobileAdsSdk()
-            } else {
-                Log.d(LOG_TAG, "Previous session consent not available, waiting for consent")
-            }
+            Log.d(LOG_TAG, "Bypassing consent gathering, directly initializing SDK")
+            
+            // 直接初始化 MobileAds SDK
+            initializeMobileAdsSdk()
         } catch (e: Exception) {
-            Log.e(LOG_TAG, "Error checking previous session consent", e)
+            Log.e(LOG_TAG, "Error initializing SDK", e)
+            gatherConsentFinished.set(true)
         }
         
         Log.d(LOG_TAG, "SplashActivity.onCreate() - Completed")
     }
 
     /**
-     * Create the countdown timer, which counts down to zero and show the app open ad.
+     * Create the timer, which waits for a fixed amount of time and then shows the app open ad.
+     * The loading spinner is already displayed in the layout.
      */
     private fun createTimer() {
-        val counterTextView: TextView = findViewById(R.id.timer)
+        // 加载圈已经在布局中显示，不需要更新文本
         countDownTimer = object : CountDownTimer(COUNTER_TIME_MILLISECONDS, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 secondsRemaining = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) + 1
-                counterTextView.text = "App is done loading in: $secondsRemaining"
+                // 不再更新倒计时文本，加载圈会自动显示
             }
 
             override fun onFinish() {
                 secondsRemaining = 0
-                counterTextView.text = "Done."
 
                 (application as MyApplication).showAdIfAvailable(
                     this@SplashActivity,
                     object : MyApplication.OnShowAdCompleteListener {
                         override fun onShowAdComplete() {
-                            // Check if the consent form is currently on screen before moving to the main
-                            // activity.
-                            if (gatherConsentFinished.get()) {
-                                startMainActivity()
-                            }
+                            // 直接启动主界面，不再检查同意表单
+                            startMainActivity()
                         }
                     },
                 )
