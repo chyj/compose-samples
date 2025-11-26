@@ -27,7 +27,7 @@ android {
     namespace = "com.example.reply"
 
     defaultConfig {
-        applicationId = "com.example.reply"
+        applicationId = "com.example.reply.openad"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
@@ -93,6 +93,7 @@ android {
 
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 }
 
@@ -122,6 +123,11 @@ dependencies {
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.window)
+
+    // AdMob dependencies
+    implementation("com.google.android.gms:play-services-ads:24.4.0")
+    implementation("com.google.android.ump:user-messaging-platform:3.2.0")
+    implementation("androidx.lifecycle:lifecycle-process:2.9.1")
 
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.core)
