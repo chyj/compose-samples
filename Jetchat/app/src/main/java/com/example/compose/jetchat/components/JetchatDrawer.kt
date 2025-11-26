@@ -48,6 +48,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -109,6 +110,7 @@ private fun DrawerHeader() {
             painter = painterResource(id = R.drawable.jetchat_logo),
             contentDescription = null,
             modifier = Modifier.padding(start = 8.dp),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
         )
     }
 }
