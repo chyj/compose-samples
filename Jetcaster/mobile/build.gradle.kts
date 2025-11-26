@@ -153,7 +153,6 @@ dependencies {
 
     // Google Mobile Ads SDK
     implementation("com.google.android.gms:play-services-ads:24.4.0")
-    implementation("com.google.android.ump:user-messaging-platform:3.2.0")
 
     coreLibraryDesugaring(libs.core.jdk.desugaring)
 }

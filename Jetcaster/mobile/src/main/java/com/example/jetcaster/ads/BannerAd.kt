@@ -45,23 +45,15 @@ private const val TAG = "BannerAd"
  *
  * @param adUnitId 广告位 ID（示例：ca-app-pub-3940256099942544/6300978111）
  * @param modifier Modifier
- * @param consentManager 合规管理器实例，用于检查是否可以请求广告
  */
 @Composable
 fun BannerAd(
     adUnitId: String,
     modifier: Modifier = Modifier,
-    consentManager: GoogleMobileAdsConsentManager? = null,
 ) {
     val context = LocalContext.current
-    var canLoadAd by remember { mutableStateOf(false) }
+    val canLoadAd = remember { mutableStateOf(true) }
     val adView = remember { mutableStateOf<AdView?>(null) }
-
-    // 检查是否可以加载广告
-    LaunchedEffect(consentManager) {
-        canLoadAd = consentManager?.canRequestAds ?: true
-        Log.d(TAG, "BannerAd - 是否可以加载广告: $canLoadAd")
-    }
 
     Box(
         modifier = modifier
@@ -110,7 +102,7 @@ fun BannerAd(
             modifier = Modifier.fillMaxWidth(),
             update = { view ->
                 // 当 canLoadAd 状态改变时，尝试加载广告
-                if (canLoadAd && view.adUnitId == adUnitId) {
+                if (canLoadAd.value && view.adUnitId == adUnitId) {
                     Log.d(TAG, "BannerAd - 更新时尝试加载广告: $adUnitId")
                     val adRequest = AdRequest.Builder().build()
                     view.loadAd(adRequest)
@@ -119,9 +111,9 @@ fun BannerAd(
         )
     }
 
-    // 当 canLoadAd 变为 true 时加载广告
-    LaunchedEffect(adUnitId, canLoadAd) {
-        if (canLoadAd && adView.value != null) {
+    // 加载广告
+    LaunchedEffect(adUnitId) {
+        if (canLoadAd.value && adView.value != null) {
             Log.d(TAG, "BannerAd - LaunchedEffect: 开始加载广告: $adUnitId")
             val adRequest = AdRequest.Builder().build()
             adView.value?.loadAd(adRequest)

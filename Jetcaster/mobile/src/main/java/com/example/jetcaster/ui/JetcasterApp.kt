@@ -36,7 +36,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.window.layout.DisplayFeature
 import com.example.jetcaster.R
-import com.example.jetcaster.ads.GoogleMobileAdsConsentManager
 import com.example.jetcaster.ui.home.MainScreen
 import com.example.jetcaster.ui.player.PlayerScreen
 
@@ -45,7 +44,6 @@ import com.example.jetcaster.ui.player.PlayerScreen
 fun JetcasterApp(
     displayFeatures: List<DisplayFeature>,
     appState: JetcasterAppState = rememberJetcasterAppState(),
-    consentManager: GoogleMobileAdsConsentManager? = null,
 ) {
     val adaptiveInfo = currentWindowAdaptiveInfo()
     if (appState.isOnline) {
@@ -68,7 +66,6 @@ fun JetcasterApp(
                                 navigateToPlayer = { episode ->
                                     appState.navigateToPlayer(episode.uri, backStackEntry)
                                 },
-                                consentManager = consentManager,
                             )
                         }
                     }

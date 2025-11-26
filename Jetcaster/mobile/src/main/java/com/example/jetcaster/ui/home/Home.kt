@@ -197,7 +197,6 @@ fun MainScreen(
     windowSizeClass: WindowSizeClass,
     navigateToPlayer: (EpisodeInfo) -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
-    consentManager: com.example.jetcaster.ads.GoogleMobileAdsConsentManager? = null,
 ) {
     val homeScreenUiState by viewModel.state.collectAsStateWithLifecycle()
     val uiState = homeScreenUiState
@@ -207,7 +206,6 @@ fun MainScreen(
             windowSizeClass = windowSizeClass,
             navigateToPlayer = navigateToPlayer,
             viewModel = viewModel,
-            consentManager = consentManager,
         )
 
         if (uiState.errorMessage != null) {
@@ -250,7 +248,6 @@ private fun HomeScreenReady(
     windowSizeClass: WindowSizeClass,
     navigateToPlayer: (EpisodeInfo) -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
-    consentManager: com.example.jetcaster.ads.GoogleMobileAdsConsentManager? = null,
 ) {
     val navigator = rememberSupportingPaneScaffoldNavigator<String>(
         scaffoldDirective = calculateScaffoldDirective(currentWindowAdaptiveInfo()),
@@ -285,7 +282,6 @@ private fun HomeScreenReady(
                     },
                     navigateToPlayer = navigateToPlayer,
                     modifier = Modifier.fillMaxSize(),
-                    consentManager = consentManager,
                 )
             },
             supportingPane = {
@@ -392,7 +388,6 @@ private fun HomeScreen(
     navigateToPodcastDetails: (PodcastInfo) -> Unit,
     navigateToPlayer: (EpisodeInfo) -> Unit,
     modifier: Modifier = Modifier,
-    consentManager: com.example.jetcaster.ads.GoogleMobileAdsConsentManager? = null,
 ) {
     // Effect that changes the home category selection when there are no subscribed podcasts
     LaunchedEffect(key1 = featuredPodcasts) {
@@ -458,7 +453,6 @@ private fun HomeScreen(
                 // Banner 广告 - 贴合底部，在 PillToolbar 上方
                 BannerAd(
                     adUnitId = "ca-app-pub-3940256099942544/6300978111", // 示例广告位 ID，替换为正式广告位
-                    consentManager = consentManager,
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .padding(
