@@ -114,7 +114,7 @@ fun NativeAdComposable(
 
     AndroidView(
         factory = { adView },
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier,
         update = { view ->
             // 当广告更新时重新填充视图
             nativeAd?.let { ad ->

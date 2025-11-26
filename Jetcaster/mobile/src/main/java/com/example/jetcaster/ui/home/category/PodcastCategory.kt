@@ -22,14 +22,18 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -57,6 +61,7 @@ import com.example.jetcaster.ui.shared.EpisodeListItem
 import com.example.jetcaster.ui.theme.JetcasterTheme
 import com.example.jetcaster.util.ToggleFollowPodcastIconButton
 import com.example.jetcaster.util.fullWidthItem
+import com.example.jetcaster.ads.NativeAdComposable
 
 fun LazyGridScope.podcastCategory(
     podcastCategoryFilterResult: PodcastCategoryFilterResult,
@@ -75,29 +80,89 @@ fun LazyGridScope.podcastCategory(
     }
 
     val episodes = podcastCategoryFilterResult.episodes
-    items(episodes, key = { it.episode.uri }) { item ->
-        val sharedTransitionScope = LocalSharedTransitionScope.current
-            ?: throw IllegalStateException("No SharedElementScope found")
-        val animatedVisibilityScope = LocalAnimatedVisibilityScope.current
-            ?: throw IllegalStateException("No SharedElementScope found")
-        with(sharedTransitionScope) {
-            EpisodeListItem(
-                episode = item.episode,
-                podcast = item.podcast,
-                onClick = navigateToPlayer,
-                onQueueEpisode = onQueueEpisode,
+    
+    // 渲染第一个剧集项（如果存在）
+    if (episodes.isNotEmpty()) {
+        val firstItem = episodes[0]
+        item(key = firstItem.episode.uri) {
+            val sharedTransitionScope = LocalSharedTransitionScope.current
+                ?: throw IllegalStateException("No SharedElementScope found")
+            val animatedVisibilityScope = LocalAnimatedVisibilityScope.current
+                ?: throw IllegalStateException("No SharedElementScope found")
+            with(sharedTransitionScope) {
+                EpisodeListItem(
+                    episode = firstItem.episode,
+                    podcast = firstItem.podcast,
+                    onClick = navigateToPlayer,
+                    onQueueEpisode = onQueueEpisode,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .animateItem(),
+                    imageModifier = Modifier.sharedElement(
+                        sharedContentState = rememberSharedContentState(
+                            key = firstItem.episode.title,
+                        ),
+                        animatedVisibilityScope = animatedVisibilityScope,
+                        clipInOverlayDuringTransition = OverlayClip(MaterialTheme.shapes.medium),
+                    ),
+                    removeFromQueue = removeFromQueue,
+                )
+            }
+        }
+        
+        // 在第一个剧集项后插入原生广告
+        // 广告实际尺寸计算（调整后）：
+        // - 容器padding: 32dp (上下各16dp)
+        // - MediaView: 280dp + margin 12dp = 292dp
+        // - 标题(2行): ~60dp + margin 8dp = 68dp
+        // - 正文(3行): ~60dp + margin 12dp = 72dp
+        // - 按钮: 48dp + padding 24dp = 72dp
+        // 广告内容总计: 32 + 292 + 68 + 72 + 72 = 536dp
+        // 加上顶部16dp和底部40dp间距 = 592dp
+        fullWidthItem {
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .animateItem(),
-                imageModifier = Modifier.sharedElement(
-                    sharedContentState = rememberSharedContentState(
-                        key = item.episode.title,
-                    ),
-                    animatedVisibilityScope = animatedVisibilityScope,
-                    clipInOverlayDuringTransition = OverlayClip(MaterialTheme.shapes.medium),
-                ),
-                removeFromQueue = removeFromQueue,
-            )
+                    .padding(horizontal = 16.dp)
+                    .height(592.dp) // 固定高度：广告536dp + 顶部16dp + 底部40dp
+            ) {
+                Spacer(Modifier.height(16.dp))
+                // 广告内容
+                NativeAdComposable(
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                // 底部间距，确保与下一个剧集项不重叠
+                Spacer(Modifier.height(40.dp))
+            }
+        }
+        
+        // 渲染剩余的剧集项（从索引1开始）
+        if (episodes.size > 1) {
+            items(episodes.subList(1, episodes.size), key = { it.episode.uri }) { item ->
+                val sharedTransitionScope2 = LocalSharedTransitionScope.current
+                    ?: throw IllegalStateException("No SharedElementScope found")
+                val animatedVisibilityScope2 = LocalAnimatedVisibilityScope.current
+                    ?: throw IllegalStateException("No SharedElementScope found")
+                with(sharedTransitionScope2) {
+                    EpisodeListItem(
+                        episode = item.episode,
+                        podcast = item.podcast,
+                        onClick = navigateToPlayer,
+                        onQueueEpisode = onQueueEpisode,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .animateItem(),
+                        imageModifier = Modifier.sharedElement(
+                            sharedContentState = rememberSharedContentState(
+                                key = item.episode.title,
+                            ),
+                            animatedVisibilityScope = animatedVisibilityScope2,
+                            clipInOverlayDuringTransition = OverlayClip(MaterialTheme.shapes.medium),
+                        ),
+                        removeFromQueue = removeFromQueue,
+                    )
+                }
+            }
         }
     }
 }
@@ -112,7 +177,9 @@ private fun CategoryPodcasts(
         podcasts = topPodcasts,
         onTogglePodcastFollowed = onTogglePodcastFollowed,
         navigateToPodcastDetails = navigateToPodcastDetails,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 16.dp),
     )
 }
 
@@ -126,7 +193,7 @@ private fun CategoryPodcastRow(
 ) {
     HorizontalUncontainedCarousel(
         state = rememberCarouselState { podcasts.count() },
-        modifier = modifier.padding(start = 8.dp),
+        modifier = modifier.padding(horizontal = 8.dp),
         itemWidth = 128.dp,
         itemSpacing = 4.dp,
     ) { i ->

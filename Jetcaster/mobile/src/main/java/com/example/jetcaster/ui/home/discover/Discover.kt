@@ -37,7 +37,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.jetcaster.R
-import com.example.jetcaster.ads.NativeAdComposable
 import com.example.jetcaster.core.model.CategoryInfo
 import com.example.jetcaster.core.model.EpisodeInfo
 import com.example.jetcaster.core.model.FilterableCategoriesModel
@@ -61,15 +60,6 @@ fun LazyGridScope.discoverItems(
     if (filterableCategoriesModel.isEmpty) {
         // TODO: empty state
         return
-    }
-
-    // 在列表最顶部添加原生广告
-    fullWidthItem {
-        NativeAdComposable(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-        )
     }
 
     fullWidthItem {

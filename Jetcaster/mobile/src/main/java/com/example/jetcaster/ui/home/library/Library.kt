@@ -45,7 +45,7 @@ fun LazyGridScope.libraryItems(
         NativeAdComposable(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp),
+                .padding(horizontal = 16.dp, vertical = 16.dp),
         )
     }
 
