@@ -26,12 +26,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import com.example.jetcaster.ui.theme.JetcasterTheme
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.RequestConfiguration
@@ -41,7 +40,7 @@ class SplashActivity : ComponentActivity() {
     companion object {
         private const val LOG_TAG = "OpenAdLifecycle"
         private const val SPLASH_DELAY_MS = 3000L
-        private const val MAX_WAIT_TIME_MS = 5000L // 最多等待5秒广告加载
+        private const val MAX_WAIT_TIME_MS = 10000L // 最多等待10秒广告加载
     }
 
     private var adShown = false
@@ -180,11 +179,8 @@ fun SplashScreen() {
             .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = "Jetcaster",
-            style = MaterialTheme.typography.headlineLarge,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colorScheme.onBackground
+        CircularProgressIndicator(
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }
