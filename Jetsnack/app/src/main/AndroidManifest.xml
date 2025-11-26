@@ -24,7 +24,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Jetsnack"
         android:enableOnBackInvokedCallback="true"
+        android:hardwareAccelerated="true"
         tools:targetApi="33">
+        <!-- AdMob App ID -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713" />
         <receiver
             android:name=".widget.RecentOrdersWidgetReceiver"
             android:label="@string/snack_order_widget_name"
@@ -45,7 +50,8 @@
             android:name=".ui.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Jetsnack"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:hardwareAccelerated="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -48,6 +48,7 @@ import com.example.jetsnack.model.SnackRepo
 import com.example.jetsnack.ui.components.FilterBar
 import com.example.jetsnack.ui.components.JetsnackDivider
 import com.example.jetsnack.ui.components.JetsnackSurface
+import com.example.jetsnack.ui.components.NativeAdView
 import com.example.jetsnack.ui.components.SnackCollection
 import com.example.jetsnack.ui.theme.JetsnackTheme
 
@@ -122,15 +123,32 @@ private fun SnackCollectionList(
                 onShowFilters = onFiltersSelected,
             )
         }
-        itemsIndexed(snackCollections) { index, snackCollection ->
-            if (index > 0) {
+        
+        // 显示第一个 SnackCollection
+        if (snackCollections.isNotEmpty()) {
+            item {
+                SnackCollection(
+                    snackCollection = snackCollections[0],
+                    onSnackClick = onSnackClick,
+                    index = 0,
+                )
+            }
+            
+            // 在第一个 SnackCollection 之后显示原生广告
+            item {
+                JetsnackDivider(thickness = 2.dp)
+                NativeAdView()
                 JetsnackDivider(thickness = 2.dp)
             }
-
+        }
+        
+        // 显示剩余的 SnackCollection
+        itemsIndexed(snackCollections.drop(1)) { index, snackCollection ->
+            JetsnackDivider(thickness = 2.dp)
             SnackCollection(
                 snackCollection = snackCollection,
                 onSnackClick = onSnackClick,
-                index = index,
+                index = index + 1,
             )
         }
     }

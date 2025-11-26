@@ -30,7 +30,7 @@ android {
     namespace = "com.example.jetsnack"
 
     defaultConfig {
-        applicationId = "com.example.jetsnack"
+        applicationId = "com.example.jetsnack.native"
         minSdk =
             libs.versions.minSdk
                 .get()
@@ -92,6 +92,7 @@ android {
 
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 
     packaging.resources {
@@ -142,4 +143,8 @@ dependencies {
 
     implementation(libs.androidx.glance.appwidget)
     implementation(libs.androidx.glance.preview)
+
+    // AdMob dependencies
+    implementation(libs.play.services.ads)
+    implementation(libs.user.messaging.platform)
 }
