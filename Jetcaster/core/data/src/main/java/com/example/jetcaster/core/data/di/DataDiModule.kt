@@ -48,6 +48,7 @@ import kotlinx.coroutines.Dispatchers
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.LoggingEventListener
+import java.util.concurrent.TimeUnit
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -57,6 +58,9 @@ object DataDiModule {
     @Singleton
     fun provideOkHttpClient(@ApplicationContext context: Context): OkHttpClient = OkHttpClient.Builder()
         .cache(Cache(File(context.cacheDir, "http_cache"), (20 * 1024 * 1024).toLong()))
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS)
         .apply {
             if (BuildConfig.DEBUG) eventListenerFactory(LoggingEventListener.Factory())
         }

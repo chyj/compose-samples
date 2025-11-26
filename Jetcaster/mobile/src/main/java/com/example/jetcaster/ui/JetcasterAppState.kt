@@ -87,14 +87,26 @@ class JetcasterAppState(val navController: NavHostController, private val contex
 
     @Suppress("DEPRECATION")
     private fun checkIfOnline(): Boolean {
-        val cm = getSystemService(context, ConnectivityManager::class.java)
+        val cm = getSystemService(context, ConnectivityManager::class.java) ?: return true // 如果无法获取 ConnectivityManager，允许尝试连接
 
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val capabilities = cm?.getNetworkCapabilities(cm.activeNetwork) ?: return false
-            capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+            val network = cm.activeNetwork
+            if (network == null) {
+                // 如果没有活动网络，允许尝试连接（可能网络状态检测不准确）
+                return true
+            }
+            val capabilities = cm.getNetworkCapabilities(network)
+            if (capabilities == null) {
+                // 如果无法获取网络能力，允许尝试连接
+                return true
+            }
+            // 检查是否有互联网能力，不强制要求已验证（允许尝试连接，即使验证状态未知）
+            capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) ||
                 capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
         } else {
-            cm?.activeNetworkInfo?.isConnectedOrConnecting == true
+            // 对于旧版本，检查是否连接或正在连接，如果无法确定则允许尝试
+            val networkInfo = cm.activeNetworkInfo
+            networkInfo?.isConnectedOrConnecting == true || networkInfo == null
         }
     }
 }
